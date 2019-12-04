@@ -9,11 +9,20 @@ import { MainScene } from "./scenes/main-scene";
 
 // main game configuration
 const config: Phaser.Types.Core.GameConfig = {
-  width: 800,
-  height: 600,
+  title: "Quantum TowerDefense",
+  url: "https://github.com/dasoran/phaser-towerdefense",
+  version: "2.0",
+  width: 640,
+  height: 480,
   type: Phaser.AUTO,
   parent: "game",
-  scene: MainScene
+  scene: [MainScene],
+  input: {
+    keyboard: false,
+    mouse: false
+  },
+  backgroundColor: "#98d687",
+  render: { pixelArt: true, antialias: false }
 };
 
 export class Game extends Phaser.Game {

@@ -1,0 +1,16 @@
+{
+    "preload": {
+        "files": [
+            {
+                "type": "image",
+                "key": "tower1",
+                "url": "src/towerdefense/assets/images/tower1.png"
+            },
+            {
+                "type": "image",
+                "key": "background",
+                "url": "src/towerdefense/assets/images/background.png"
+            }
+        ]
+    }
+}

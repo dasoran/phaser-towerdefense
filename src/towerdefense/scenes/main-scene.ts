@@ -4,8 +4,12 @@
  * @license      {@link https://github.com/dasoran/phaser-towerdefence/blob/master/LICENSE.md | MIT License}
  */
 
+import { Tower } from "../objects/tower";
+import { Tower1 } from "../objects/tower1";
+
 export class MainScene extends Phaser.Scene {
-  private phaserSprite: Phaser.GameObjects.Sprite;
+  private towers: Tower[];
+  private timer: Phaser.Time.TimerEvent;
 
   constructor() {
     super({
@@ -14,10 +18,34 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image("myImage", "../assets/phaser.png");
+    this.load.pack(
+      "preload",
+      "./src/towerdefense/assets/pack.json",
+      "preload"
+    );
   }
 
   create(): void {
-    this.phaserSprite = this.add.sprite(400, 300, "myImage");
+    this.towers = [];
+
+    this.add.image(320, 240, "background");
+    const towerPos = this.calculateAbsolutePos(4,3);
+    this.towers.push(new Tower1({
+      scene: this,
+      x: towerPos[0],
+      y: towerPos[1]}));
+  }
+
+  update(): void {
+    for (var tower of this.towers) {
+      tower.update();
+    }
+  }
+
+  private calculateAbsolutePos(x: number, y: number): number[] {
+    const absolutePos: number[]  = [];
+    absolutePos.push(x * 32 + 16);
+    absolutePos.push(y * 32 + 16);
+    return absolutePos;
   }
 }
