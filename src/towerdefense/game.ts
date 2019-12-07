@@ -19,7 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
   scene: [MainScene],
   input: {
     keyboard: false,
-    mouse: false
+    mouse: true
   },
   backgroundColor: "#98d687",
   render: { pixelArt: true, antialias: false }

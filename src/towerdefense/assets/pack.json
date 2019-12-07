@@ -10,6 +10,11 @@
                 "type": "image",
                 "key": "background",
                 "url": "src/towerdefense/assets/images/background.png"
+            },
+            {
+                "type": "image",
+                "key": "menu",
+                "url": "src/towerdefense/assets/images/menu.png"
             }
         ]
     }
