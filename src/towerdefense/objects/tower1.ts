@@ -10,12 +10,14 @@ export class Tower1 extends Tower {
   constructor(params) {
     super(params.scene, params.x, params.y, "tower1", params.frame);
 
-    this.addTowerEventTimer(1000);
-
     this.scene.add.existing(this);
   }
 
   update(): void {
+  }
+
+  startTimer(): void {
+    this.addTowerEventTimer(1000);
   }
 
   towerEvent(): void {

@@ -15,6 +15,11 @@
                 "type": "image",
                 "key": "menu",
                 "url": "src/towerdefense/assets/images/menu.png"
+            },
+            {
+                "type": "image",
+                "key": "enemy_fff",
+                "url": "src/towerdefense/assets/images/enemy_fff.png"
             }
         ]
     }

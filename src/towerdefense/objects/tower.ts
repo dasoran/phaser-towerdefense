@@ -6,12 +6,15 @@
 
 export class Tower extends Phaser.GameObjects.Image {
   private timer: Phaser.Time.TimerEvent;
+  private isTimerActive: boolean;
 
   constructor(scene, x, y, key, frame) {
     super(scene, x, y, key, frame);
+    this.isTimerActive = false;
   }
 
   addTowerEventTimer(timer: number) {
+    this.isTimerActive = true;
     this.timer = this.scene.time.addEvent({
       delay: timer,
       callback: this.towerEvent,
@@ -21,6 +24,11 @@ export class Tower extends Phaser.GameObjects.Image {
   }
 
   update(): void {
+  }
+  startTimer(): void {
+  }
+  getIsTimerActive(): boolean {
+    return this.isTimerActive;
   }
   towerEvent(): void {
   }
