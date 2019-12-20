@@ -4,25 +4,67 @@
  * @license      {@link https://github.com/dasoran/phaser-towerdefence/blob/master/LICENSE.md | MIT License}
  */
 
+
+import * as q from '@qramana/qramana';
+
+import { Laser } from "./laser";
 export class Enemy extends Phaser.GameObjects.Image {
-  private timer: Phaser.Time.TimerEvent;
   private speed: number;
   private speedCount: number;
+  // private qState: q.Qubit;
+  private qState: number;
+  private isDestroyed: boolean;
+  private relatedObject: Laser[];
 
   constructor(params) {
     super(params.scene, params.x, params.y, "enemy_" + Enemy.getNameFromState(params.state), params.frame);
     this.scene.add.existing(this);
     this.speed = params.speed;
     this.speedCount = 0;
+    this.qState = 1;
+    if (params.state[0] == -1) {
+      this.qState = 0;
+    }
+    this.isDestroyed = false;
+    this.relatedObject = [];
+    // this.qState = new q.Qubit({value: "|1>"});
   }
 
-  update(distanceMap: number[][]): void {
+  addRelation(func: Laser): void {
+    this.relatedObject.push(func);
+  }
+
+  update(distanceMap: number[][]): boolean {
     this.speedCount += 1;
     if (this.speedCount >= this.speed) {
       this.speedCount = 0;
       const diff = this.calculateDiff(distanceMap);
       this.x += diff[0];
       this.y += diff[1];
+    }
+
+    return this.isDestroyed;
+  }
+
+  hit(operate: string): void {
+    if (this.isDestroyed) {
+      return;
+    }
+    if (operate == "not") {
+      if (this.qState == 1) {
+        this.qState = 0;
+        this.setTexture("enemy_" + "177");
+      } else {
+        this.qState = 1;
+        this.setTexture("enemy_" + "f77");
+      }
+    } else if (operate == "measure") {
+      if (this.qState == 1) {
+        this.isDestroyed = true;
+        for (let laser of this.relatedObject) {
+          laser.destroyByEnemyDestroied();
+        }
+      }
     }
   }
 
@@ -119,6 +161,7 @@ export class Enemy extends Phaser.GameObjects.Image {
     const realStr = Enemy.convertStateToColorStr(state["real"]);
     const imStr = Enemy.convertStateToColorStr(state["im"]);
     const plusStr = Enemy.convertStateToColorStr(state["plus"]);
+    console.log("state string: (" + realStr + imStr + plusStr + ")");
     return realStr + imStr + plusStr;
   }
 

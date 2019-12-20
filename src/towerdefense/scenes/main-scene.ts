@@ -6,6 +6,7 @@
 
 import { Tower } from "../objects/tower";
 import { Tower1 } from "../objects/tower1";
+import { Tower2 } from "../objects/tower2";
 import { Menu } from "../objects/menu";
 import { Enemy } from "../objects/enemy";
 import { Calculate } from "../logic/calculate";
@@ -21,9 +22,12 @@ export class MainScene extends Phaser.Scene {
   private gameHeight: number;
   private goalX: number;
   private goalY: number;
+  private menu: Menu;
   private menuWidth: number;
   private wallWidth: number;
   private wallMask: number[][];
+
+  private currentTower: string;
 
   private calc: Calculate;
   private distanceMap: number[][];
@@ -54,6 +58,8 @@ export class MainScene extends Phaser.Scene {
     this.gameHeight = 480
     this.goalX = 0;
     this.goalY = 7;
+
+    this.currentTower = "tower1";
 
     // initialize tower data
     const towerWidth = this.gameWidth / 32;
@@ -101,7 +107,8 @@ export class MainScene extends Phaser.Scene {
       this
     );
 
-    const menu = new Menu({
+    this.menu = new Menu({
+      currentTower: this.currentTower,
       scene: this,
       x: this.gameWidth - this.menuWidth / 2,
       y: this.gameHeight / 2});
@@ -122,8 +129,24 @@ export class MainScene extends Phaser.Scene {
           const towerPos = this.calculateTowerPos(pos[0], pos[1]);
           this.addTower(towerPos[0], towerPos[1]);
           this.distanceMap = this.calc.calculateDisctanceToGoal(this.towersByPos, this.towers.length);
+        } else if (this.isMenuArea(pos[0], pos[1])) {
+          if (18 * 32 - 16 - 16 < pos[0]
+              && pos[0] < 18 * 32 - 16 + 16
+              && 12 * 32 - 16 < pos[1]
+              && pos[1]< 12 * 32 + 16) {
+            this.currentTower = "tower1";
+            this.menu.changeCurrentTower(this.currentTower);
+          } else if (19 * 32 - 16 < pos[0]
+              && pos[0] < 19 * 32 + 16
+              && 12 * 32 - 16 < pos[1]
+              && pos[1] < 12 * 32 + 16) {
+            this.currentTower = "tower2";
+            this.menu.changeCurrentTower(this.currentTower);
+          } else {
+
+          }
         } else {
-          console.log("menu clicked");
+          console.log("other clicked");
         }
       }
       this.clickedQueue = [];
@@ -136,15 +159,33 @@ export class MainScene extends Phaser.Scene {
         }
       }
     }
-
     
+    this.menu.update();
+
     for (let tower of this.towers) {
       tower.update();
     }
 
+    const enemies = []
     for (let enemy of this.enemies) {
-      enemy.update(this.distanceMap);
+      if (enemy.update(this.distanceMap)) {
+        enemy.destroy();
+      } else {
+        enemies.push(enemy);
+      }
     }
+    if (this.enemies.length != enemies.length) {
+      while(this.enemies.length != 0) {
+        this.enemies.pop();
+      }
+      for (let enemy of enemies) {
+        this.enemies.push(enemy);
+      }
+    }
+  }
+
+  getEnemies(): Enemy[] {
+    return this.enemies;
   }
 
   private generateEnemySpawnClosure(conf: object): CallableFunction {
@@ -175,13 +216,32 @@ export class MainScene extends Phaser.Scene {
       && (y < this.gameHeight);
   }
 
+  private isMenuArea(x: number, y: number): boolean {
+    return (x >= this.gameWidth - this.menuWidth)
+      && (x < this.gameWidth)
+      && (y >= 0)
+      && (y < this.gameHeight);
+  }
+
   private addTower(x: number, y: number): void {
     const towerPos = this.calculateAbsolutePos(x, y);
     if (!this.towersByPos[x][y]) {
-      const tower = new Tower1({
-        scene: this,
-        x: towerPos[0],
-        y: towerPos[1]});
+      let tower = null;
+      if (this.currentTower == "tower1") {
+        tower = new Tower1({
+          enemies: this.enemies,
+          scene: this,
+          x: towerPos[0],
+          y: towerPos[1]});
+      } else if (this.currentTower == "tower2") {
+        tower = new Tower2({
+          enemies: this.enemies,
+          scene: this,
+          x: towerPos[0],
+          y: towerPos[1]});
+      } else {
+        console.log("no tower");
+      }
       this.towers.push(tower);
       this.towersByPos[x][y] = tower;
     } else {

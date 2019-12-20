@@ -8,6 +8,31 @@
             },
             {
                 "type": "image",
+                "key": "tower2",
+                "url": "src/towerdefense/assets/images/tower2.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower1_active",
+                "url": "src/towerdefense/assets/images/button_tower1_active.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower2_active",
+                "url": "src/towerdefense/assets/images/button_tower2_active.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower1_disable",
+                "url": "src/towerdefense/assets/images/button_tower1_disable.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower2_disable",
+                "url": "src/towerdefense/assets/images/button_tower2_disable.png"
+            },
+            {
+                "type": "image",
                 "key": "background",
                 "url": "src/towerdefense/assets/images/background.png"
             },
@@ -18,8 +43,28 @@
             },
             {
                 "type": "image",
+                "key": "laser",
+                "url": "src/towerdefense/assets/images/laser.png"
+            },
+            {
+                "type": "image",
+                "key": "laser2",
+                "url": "src/towerdefense/assets/images/laser2.png"
+            },
+            {
+                "type": "image",
                 "key": "enemy_fff",
                 "url": "src/towerdefense/assets/images/enemy_fff.png"
+            },
+            {
+                "type": "image",
+                "key": "enemy_f77",
+                "url": "src/towerdefense/assets/images/enemy_f77.png"
+            },
+            {
+                "type": "image",
+                "key": "enemy_177",
+                "url": "src/towerdefense/assets/images/enemy_177.png"
             }
         ]
     }
