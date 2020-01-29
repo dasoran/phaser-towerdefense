@@ -175,12 +175,8 @@ export class MainScene extends Phaser.Scene {
       }
     }
     if (this.enemies.length != enemies.length) {
-      while(this.enemies.length != 0) {
-        this.enemies.pop();
-      }
-      for (let enemy of enemies) {
-        this.enemies.push(enemy);
-      }
+      this.enemies.length  = 0;
+      this.enemies = enemies;
     }
   }
 

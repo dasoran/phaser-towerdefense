@@ -11,8 +11,8 @@ import { Laser } from "./laser";
 export class Enemy extends Phaser.GameObjects.Image {
   private speed: number;
   private speedCount: number;
-  // private qState: q.Qubit;
-  private qState: number;
+  private qState: q.Qubit;
+  // private qState: number;
   private isDestroyed: boolean;
   private relatedObject: Laser[];
 
@@ -21,13 +21,13 @@ export class Enemy extends Phaser.GameObjects.Image {
     this.scene.add.existing(this);
     this.speed = params.speed;
     this.speedCount = 0;
-    this.qState = 1;
     if (params.state[0] == -1) {
-      this.qState = 0;
+      this.qState = new q.Qubit({"value": 0});
+    } else {
+      this.qState = new q.Qubit({"value": 1});
     }
     this.isDestroyed = false;
     this.relatedObject = [];
-    // this.qState = new q.Qubit({value: "|1>"});
   }
 
   addRelation(func: Laser): void {
@@ -51,15 +51,14 @@ export class Enemy extends Phaser.GameObjects.Image {
       return;
     }
     if (operate == "not") {
-      if (this.qState == 1) {
-        this.qState = 0;
+      this.qState.x();
+      if (this.qState.simulated.getStateVector()[0].re == 1) {
         this.setTexture("enemy_" + "177");
       } else {
-        this.qState = 1;
         this.setTexture("enemy_" + "f77");
       }
     } else if (operate == "measure") {
-      if (this.qState == 1) {
+      if (this.qState.measure() == 0) {
         this.isDestroyed = true;
         for (let laser of this.relatedObject) {
           laser.destroyByEnemyDestroied();

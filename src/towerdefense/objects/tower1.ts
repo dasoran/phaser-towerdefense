@@ -30,6 +30,7 @@ export class Tower1 extends Tower {
       }
     }
     if (this.lasers.length != lasers.length) {
+      this.lasers.length = 0;
       this.lasers = lasers;
     }
   }
