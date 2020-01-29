@@ -82,14 +82,6 @@ export class MainScene extends Phaser.Scene {
 
     // initialize enemy data
     this.scripts = Script.loadScript();
-    for (let enemyConf of this.scripts) {
-      this.time.addEvent({
-        delay: enemyConf["startAt"],
-        callback: this.generateEnemySpawnClosure(enemyConf),
-        callbackScope: this,
-        loop: false
-      });
-    }
     this.enemies = [];
 
     // initialize io
@@ -122,6 +114,20 @@ export class MainScene extends Phaser.Scene {
     });
   }
 
+  // initialize enemy timer
+  generateEnemyStartTimerClosure(that): CallableFunction {
+    return function () {
+      for (let enemyConf of that.scripts) {
+        that.time.addEvent({
+          delay: enemyConf["startAt"],
+          callback: that.generateEnemySpawnClosure(enemyConf),
+          callbackScope: that,
+          loop: false
+        });
+      }
+    }
+  }
+
   update(): void {
     if (this.clickedQueue.length > 0){
       for (var pos of this.clickedQueue) {
@@ -142,6 +148,11 @@ export class MainScene extends Phaser.Scene {
               && pos[1] < 12 * 32 + 16) {
             this.currentTower = "tower2";
             this.menu.changeCurrentTower(this.currentTower);
+          } else if (18 * 32 - 48 < pos[0]
+            && pos[0] < 18 * 32 - 16 + 48
+            && 13.5 * 32 - 16 < pos[1]
+            && pos[1]< 13.5 * 32 + 16) {
+            this.menu.clickStartButton(this.generateEnemyStartTimerClosure(this));
           } else {
 
           }
@@ -175,8 +186,12 @@ export class MainScene extends Phaser.Scene {
       }
     }
     if (this.enemies.length != enemies.length) {
-      this.enemies.length  = 0;
-      this.enemies = enemies;
+      while(this.enemies.length != 0) {
+        this.enemies.pop();
+      }
+      for (let enemy of enemies) {
+        this.enemies.push(enemy);
+      }
     }
   }
 
@@ -195,7 +210,7 @@ export class MainScene extends Phaser.Scene {
       this.enemies.push(new Enemy({
         scene: this,
         state: state,
-        speed: 3,
+        speed: 5,
         x: this.gameWidth - this.menuWidth - 16,
         y: this.gameHeight / 2}));
     };

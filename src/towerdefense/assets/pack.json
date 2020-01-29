@@ -65,6 +65,26 @@
                 "type": "image",
                 "key": "enemy_177",
                 "url": "src/towerdefense/assets/images/enemy_177.png"
+            },
+            {
+                "type": "image",
+                "key": "start",
+                "url": "src/towerdefense/assets/images/start.png"
+            },
+            {
+                "type": "image",
+                "key": "countdown_1",
+                "url": "src/towerdefense/assets/images/countdown_1.png"
+            },
+            {
+                "type": "image",
+                "key": "countdown_2",
+                "url": "src/towerdefense/assets/images/countdown_2.png"
+            },
+            {
+                "type": "image",
+                "key": "countdown_3",
+                "url": "src/towerdefense/assets/images/countdown_3.png"
             }
         ]
     }

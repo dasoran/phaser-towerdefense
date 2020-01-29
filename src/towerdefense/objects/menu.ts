@@ -1,4 +1,5 @@
 import { Tilemaps } from "phaser";
+import { Calculate } from "../logic/calculate";
 
 /**
  * @author       dasoran <dasoran@gmail.com>
@@ -12,6 +13,8 @@ export class Menu extends Phaser.GameObjects.Image {
   private towerButtonSprite: object;
   private towerPos: object;
   private isNeedUpdate: boolean;
+  private startButtonSprite: Phaser.GameObjects.TileSprite;
+  private startCount: number;
 
   constructor(params) {
     super(params.scene, params.x, params.y, "menu", params.frame);
@@ -25,9 +28,11 @@ export class Menu extends Phaser.GameObjects.Image {
     this.towerPos["tower2"] = [19 * 32, 12 * 32];
     this.isNeedUpdate = true;
     this.towerButtonSprite = {};
+    this.startButtonSprite = null;
+    this.startCount = -1;
   }
 
-  generateTowerButtonSprite(towerName: string, state: boolean): Phaser.GameObjects.TileSprite {
+  generateTowerButtonSpripe(towerName: string, state: boolean): Phaser.GameObjects.TileSprite {
     const x = this.towerPos[towerName][0];
     const y = this.towerPos[towerName][1];
     let texKey = "button_" + towerName;
@@ -45,14 +50,41 @@ export class Menu extends Phaser.GameObjects.Image {
       texKey);
   }
 
+  generateStartButtonStripe(): Phaser.GameObjects.TileSprite {
+    let texKey = null;
+    if (this.startCount > 0 && this.startCount <= 3) {
+      texKey = "countdown_" + this.startCount.toString();
+    } else if (this.startCount == -1) {
+      texKey = "start";
+    } else {
+      return null;
+    }
+    return new Phaser.GameObjects.TileSprite(
+      this.scene,
+      18 * 32,
+      13.5 * 32,
+      96,
+      32,
+      texKey);
+  }
+
   update(): void {
     if (!this.isNeedUpdate) return;
     this.isNeedUpdate = false;
 
+    const lastStartStripe = this.startButtonSprite
+    this.startButtonSprite = this.generateStartButtonStripe();
+    if (this.startButtonSprite) {
+      this.scene.add.existing(this.startButtonSprite);
+    }
+    if (lastStartStripe) {
+      lastStartStripe.destroy();
+    }
+
     for (let towerName in this.towerButtonState) {
       const towerState = this.towerButtonState[towerName];
       const lastSprite = this.towerButtonSprite[towerName];
-      this.towerButtonSprite[towerName] = this.generateTowerButtonSprite(towerName, towerState);
+      this.towerButtonSprite[towerName] = this.generateTowerButtonSpripe(towerName, towerState);
       this.scene.add.existing(this.towerButtonSprite[towerName]);
       if (lastSprite) {
         lastSprite.destroy();
@@ -66,5 +98,37 @@ export class Menu extends Phaser.GameObjects.Image {
       this.towerButtonState[towerName] = false;
     }
     this.towerButtonState[currentTowerName] = true;
+  }
+
+  clickStartButton(starter: CallableFunction): void {
+    this.scene.time.addEvent({
+      delay: 1000,
+      callback: this.countdownStartTime,
+      callbackScope: this,
+      loop: false
+    });
+    this.scene.time.addEvent({
+      delay: 3000,
+      callback: starter,
+      callbackScope: this,
+      loop: false
+    });
+    this.isNeedUpdate = true;
+    this.startCount = 3;
+    console.log("count down: " + this.startCount);
+  }
+
+  countdownStartTime(): void {
+    this.isNeedUpdate = true;
+    this.startCount -= 1;
+    console.log("count down: " + this.startCount);
+    if (this.startCount > 0) {
+      this.scene.time.addEvent({
+        delay: 1000,
+        callback: this.countdownStartTime,
+        callbackScope: this,
+        loop: false
+      });
+    }
   }
 }
