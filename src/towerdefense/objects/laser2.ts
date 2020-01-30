@@ -36,7 +36,7 @@ export class Laser2 extends Phaser.GameObjects.Image {
       for (let enemy of this.enemies) {
         if (this.x - 16 < enemy.x && enemy.x < this.x + 16
           && this.y - 16 < enemy.y && enemy.y < this.y + 16) {
-            enemy.hit("measure");
+            enemy.hit(null, "measure");
         }
       }
     }

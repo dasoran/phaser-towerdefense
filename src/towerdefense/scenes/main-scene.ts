@@ -11,6 +11,8 @@ import { Menu } from "../objects/menu";
 import { Enemy } from "../objects/enemy";
 import { Calculate } from "../logic/calculate";
 import { Script } from "../logic/script";
+import { Tower3 } from "../objects/tower3";
+import { Tower4 } from "../objects/tower4";
 
 export class MainScene extends Phaser.Scene {
   private towers: Tower[];
@@ -136,17 +138,41 @@ export class MainScene extends Phaser.Scene {
           this.addTower(towerPos[0], towerPos[1]);
           this.distanceMap = this.calc.calculateDisctanceToGoal(this.towersByPos, this.towers.length);
         } else if (this.isMenuArea(pos[0], pos[1])) {
-          if (18 * 32 - 16 - 16 < pos[0]
-              && pos[0] < 18 * 32 - 16 + 16
-              && 12 * 32 - 16 < pos[1]
-              && pos[1]< 12 * 32 + 16) {
+          if (18 * 32 - 16 - 32/2 < pos[0]
+              && pos[0] < 18 * 32 - 16 + 32/2
+              && 9 * 32 - 32/2 < pos[1]
+              && pos[1]< 9 * 32 + 32/2) {
             this.currentTower = "tower1";
             this.menu.changeCurrentTower(this.currentTower);
-          } else if (19 * 32 - 16 < pos[0]
-              && pos[0] < 19 * 32 + 16
-              && 12 * 32 - 16 < pos[1]
-              && pos[1] < 12 * 32 + 16) {
+          } else if (19 * 32 - 32/2 < pos[0]
+              && pos[0] < 19 * 32 + 32/2
+              && 9 * 32 - 32/2 < pos[1]
+              && pos[1] < 9 * 32 + 32/2) {
             this.currentTower = "tower2";
+            this.menu.changeCurrentTower(this.currentTower);
+          } else if (18 * 32 - 16 - 32/2 < pos[0]
+              && pos[0] < 18 * 32 - 16 + 32/2
+              && 10.5 * 32 - 32/2 < pos[1]
+              && pos[1]< 10.5 * 32 + 32/2) {
+            this.currentTower = "tower3";
+            this.menu.changeCurrentTower(this.currentTower);
+          } else if (19 * 32 - 32/2 < pos[0]
+              && pos[0] < 19 * 32 + 32/2
+              && 10.5 * 32 - 32/2 < pos[1]
+              && pos[1] < 10.5 * 32 + 32/2) {
+            this.currentTower = "tower4";
+            this.menu.changeCurrentTower(this.currentTower);
+          } else if (18 * 32 - 16 - 32/2 < pos[0]
+              && pos[0] < 18 * 32 - 16 + 32/2
+              && 12 * 32 - 32/2 < pos[1]
+              && pos[1]< 12 * 32 + 32/2) {
+            this.currentTower = "tower5";
+            this.menu.changeCurrentTower(this.currentTower);
+          } else if (19 * 32 - 32/2 < pos[0]
+              && pos[0] < 19 * 32 + 32/2
+              && 12 * 32 - 32/2 < pos[1]
+              && pos[1] < 12 * 32 + 32/2) {
+            this.currentTower = "tower6";
             this.menu.changeCurrentTower(this.currentTower);
           } else if (18 * 32 - 48 < pos[0]
             && pos[0] < 18 * 32 - 16 + 48
@@ -203,9 +229,10 @@ export class MainScene extends Phaser.Scene {
     return function () {
       console.log("enemy spawn: " + JSON.stringify(conf))
       const state = {
-        "real": conf["state"][0],
-        "im": conf["state"][1],
-        "plus": conf["state"][2]
+        "one_real": conf["state"][0],
+        "one_im": conf["state"][1],
+        "zero_real": conf["state"][2],
+        "zero_im": conf["state"][3]
       }
       this.enemies.push(new Enemy({
         scene: this,
@@ -250,8 +277,21 @@ export class MainScene extends Phaser.Scene {
           scene: this,
           x: towerPos[0],
           y: towerPos[1]});
+      } else if (this.currentTower == "tower3") {
+        tower = new Tower3({
+          enemies: this.enemies,
+          scene: this,
+          x: towerPos[0],
+          y: towerPos[1]});
+      } else if (this.currentTower == "tower4") {
+        tower = new Tower4({
+          enemies: this.enemies,
+          scene: this,
+          x: towerPos[0],
+          y: towerPos[1]});
       } else {
         console.log("no tower");
+        return;
       }
       this.towers.push(tower);
       this.towersByPos[x][y] = tower;

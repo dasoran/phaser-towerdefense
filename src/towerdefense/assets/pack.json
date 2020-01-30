@@ -13,6 +13,26 @@
             },
             {
                 "type": "image",
+                "key": "tower3",
+                "url": "src/towerdefense/assets/images/tower3.png"
+            },
+            {
+                "type": "image",
+                "key": "tower4",
+                "url": "src/towerdefense/assets/images/tower4.png"
+            },
+            {
+                "type": "image",
+                "key": "tower5",
+                "url": "src/towerdefense/assets/images/tower5.png"
+            },
+            {
+                "type": "image",
+                "key": "tower6",
+                "url": "src/towerdefense/assets/images/tower6.png"
+            },
+            {
+                "type": "image",
                 "key": "button_tower1_active",
                 "url": "src/towerdefense/assets/images/button_tower1_active.png"
             },
@@ -23,6 +43,26 @@
             },
             {
                 "type": "image",
+                "key": "button_tower3_active",
+                "url": "src/towerdefense/assets/images/button_tower3_active.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower4_active",
+                "url": "src/towerdefense/assets/images/button_tower4_active.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower5_active",
+                "url": "src/towerdefense/assets/images/button_tower5_active.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower6_active",
+                "url": "src/towerdefense/assets/images/button_tower6_active.png"
+            },
+            {
+                "type": "image",
                 "key": "button_tower1_disable",
                 "url": "src/towerdefense/assets/images/button_tower1_disable.png"
             },
@@ -30,6 +70,26 @@
                 "type": "image",
                 "key": "button_tower2_disable",
                 "url": "src/towerdefense/assets/images/button_tower2_disable.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower3_disable",
+                "url": "src/towerdefense/assets/images/button_tower3_disable.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower4_disable",
+                "url": "src/towerdefense/assets/images/button_tower4_disable.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower5_disable",
+                "url": "src/towerdefense/assets/images/button_tower5_disable.png"
+            },
+            {
+                "type": "image",
+                "key": "button_tower6_disable",
+                "url": "src/towerdefense/assets/images/button_tower6_disable.png"
             },
             {
                 "type": "image",
@@ -50,21 +110,6 @@
                 "type": "image",
                 "key": "laser2",
                 "url": "src/towerdefense/assets/images/laser2.png"
-            },
-            {
-                "type": "image",
-                "key": "enemy_fff",
-                "url": "src/towerdefense/assets/images/enemy_fff.png"
-            },
-            {
-                "type": "image",
-                "key": "enemy_f77",
-                "url": "src/towerdefense/assets/images/enemy_f77.png"
-            },
-            {
-                "type": "image",
-                "key": "enemy_177",
-                "url": "src/towerdefense/assets/images/enemy_177.png"
             },
             {
                 "type": "image",

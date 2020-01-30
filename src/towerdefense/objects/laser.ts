@@ -38,7 +38,7 @@ export class Laser extends Phaser.GameObjects.Image {
 
       const isHit = this.checkHit();
       if (isHit) {
-        this.enemy.hit(this.operate);
+        this.enemy.hit(this, this.operate);
       }
       return isHit;
     }
