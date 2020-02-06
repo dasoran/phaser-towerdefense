@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "quantum-towerdefense",
   "version": "1.0.0",
-  "description": "Boilerplate for Phaser 3 in TypeScript",
+  "description": "Quantum towerdefense",
   "keywords": [
     "Phaser",
     "Phaser 3",
@@ -26,7 +26,8 @@
     "webpack-dev-server": "3.9.0"
   },
   "dependencies": {
-    "phaser": "3.20.1"
+    "phaser": "3.20.1",
+    "@qramana/qramana": "0.0.5"
   },
   "scripts": {
     "dev": "webpack --mode development && webpack-dev-server --mode development",
@@ -34,15 +35,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitsensitive/phaser3-typescript.git"
+    "url": "git+https://github.com/dasoran/phaser-towerdefense.git"
   },
   "author": {
-    "name": "digitsensitive",
-    "email": "digit.sensitivee@gmail.com"
+    "name": "dasoran",
+    "email": "dasoran@gmail.com"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/digitsensitive/phaser3-typescript/issues"
+    "url": "https://github.com/dasoran/phaser-towerdefense/issues"
   },
-  "homepage": "https://github.com/digitsensitive/phaser3-typescript#readme"
+  "homepage": "https://github.com/dasoran/phaser-towerdefense#readme"
 }
